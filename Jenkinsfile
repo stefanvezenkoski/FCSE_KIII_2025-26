@@ -40,4 +40,25 @@ pipeline {
             echo 'Error! Check the console output.'
         }
     }
+
+    post {
+            success {
+                discordSend(
+                    webhookURL: 'ТУКА_ЗАЛЕПИ_ГО_DISCORD_WEBHOOK_LINKOT',
+                    title: "Успешен Build: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                    description: "Браво Стефан! Апликацијата е успешно тестирана и спакувана. ✅",
+                    result: 'SUCCESS',
+                    scms: true
+                )
+            }
+            failure {
+                discordSend(
+                    webhookURL: 'ТУКА_ЗАЛЕПИ_ГО_DISCORD_WEBHOOK_LINKOT',
+                    title: "Build ФЕЈЛНА: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                    description: "Нешто се расипа! Провери ги логовите во Jenkins. ❌",
+                    result: 'FAILURE',
+                    scms: true
+                )
+            }
+        }
 }
