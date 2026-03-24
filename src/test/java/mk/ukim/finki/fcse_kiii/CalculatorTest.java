@@ -8,6 +8,6 @@ public class CalculatorTest {
     @Test
     void testAdd() {
         Calculator calc = new Calculator();
-        assertEquals(5, calc.add(2, 3));
+        assertEquals(51, calc.add(2, 3));
     }
 }
