@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class FcseKiiiApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(FcseKiiiApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(FcseKiiiApplication.class, args);
+    }
 
 }
