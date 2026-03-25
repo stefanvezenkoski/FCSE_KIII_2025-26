@@ -58,7 +58,7 @@ pipeline {
             withCredentials([string(credentialsId: 'my-discord-webhook', variable: 'DISCORD_URL')]) {
                 discordSend(
                     webhookURL: "${DISCORD_URL}",
-                    title: "#${env.BUILD_NUMBER} Build failed: ${env.JOB_NAME} ❌",
+                    title: "Build #${env.BUILD_NUMBER} FAILED! ❌",
                                description: """
        **Project name:** ${env.JOB_NAME}
        **Developer:** ${authorName}
