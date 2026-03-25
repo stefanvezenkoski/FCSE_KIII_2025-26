@@ -34,7 +34,7 @@ pipeline {
             echo 'Bravo Stefan! Tests passed.'
             // Discord нотификација за успех
             discordSend(
-                webhookURL: 'https://discord.com/api/webhooks/1486151466661056654/xobOHz1lbnV13AZcmGHBZzgplnSpPfGJettARan-JDciKhGtaRRszL8mDQa23thYNkEm',
+                webhookURL: ,
                 title: "Успешен Build: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 description: "Браво Стефан! Апликацијата е успешно тестирана и спакувана. ✅",
                 result: 'SUCCESS',
@@ -45,7 +45,7 @@ pipeline {
             echo 'Error! Check the console output.'
             // Discord нотификација за неуспех
             discordSend(
-                webhookURL: 'https://discord.com/api/webhooks/1486151466661056654/xobOHz1lbnV13AZcmGHBZzgplnSpPfGJettARan-JDciKhGtaRRszL8mDQa23thYNkEm',
+                webhookURL: ,
                 title: "Build ФЕЈЛНА: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 description: "Нешто се расипа! Провери ги логовите во Jenkins. ❌",
                 result: 'FAILURE',
