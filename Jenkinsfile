@@ -52,6 +52,8 @@ pipeline {
                    }
                }
         failure {
+           def authorName = getCommitAuthor()
+
             withCredentials([string(credentialsId: 'my-discord-webhook', variable: 'DISCORD_URL')]) {
                 discordSend(
                     webhookURL: "${DISCORD_URL}",
