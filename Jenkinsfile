@@ -35,9 +35,8 @@ pipeline {
                 discordSend(
                     webhookURL: "${DISCORD_URL}",
                     title: "Успешен Build: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                    description: "Браво Стефан! Сега кодот е конечно безбеден и чист. ✅ Build-от го направи: ${env.USER_ID}. Погледни ги промените тука: ${env.BUILD_URL}",
+                    description: "Браво Стефан! Сега кодот е конечно безбеден и чист. ✅ Build-от го направи: ${env.USER_ID}. Погледни ги промените тука: ${env.RUN_DISPLAY_URL}",
                     result: 'SUCCESS',
-                    scms: true
                 )
             }
         }
@@ -46,9 +45,8 @@ pipeline {
                 discordSend(
                     webhookURL: "${DISCORD_URL}",
                     title: "Build ФЕЈЛНА: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                    description: "Провери ги логовите во Jenkins. ❌. Build-от го направи: ${env.USER_ID}. Погледни ги промените тука: ${env.BUILD_URL}",
+                    description: "Провери ги логовите во Jenkins. ❌. Build-от го направи: ${env.USER_ID}. Погледни ги промените тука: ${env.RUN_DISPLAY_URL}",
                     result: 'FAILURE',
-                    scms: true
                 )
             }
         }
