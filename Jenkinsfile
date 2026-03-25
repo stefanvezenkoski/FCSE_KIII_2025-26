@@ -32,23 +32,19 @@ pipeline {
         }
        success {
                    script {
-                       // Оваа магија го извлекува името на тој што направил push
-                       def changeLogSets = currentBuild.changeSets
-                       def authorName = "Unknown"
-                       if (!changeLogSets.isEmpty()) {
-                           authorName = changeLogSets[0].items[0].author.fullName
-                       }
+                       // Ја повикуваме функцијата одоздола
+                       def authorName = getCommitAuthor()
 
-                       withCredentials([string(credentialsId: 'my-discord-webhook', variable: 'DISCORD_URL')]) {
+                       withCredentials([string(credentialsId: 'discord-webhook-id', variable: 'DISCORD_URL')]) {
                            discordSend(
                                webhookURL: "${DISCORD_URL}",
-                               title: "Build #${env.BUILD_NUMBER} - УСПЕШЕН! ✅",
+                               title: "Билд #${env.BUILD_NUMBER} - УСПЕШЕН! ✅",
                                description: """
        **Проект:** ${env.JOB_NAME}
        **Девелопер:** ${authorName}
-       **Линк до билдот:** ${env.BUILD_URL}
+       **Линкот е поправен:** ${env.BUILD_URL}
        __________________________________
-       Браво Стефан! Кодот е сега безбеден и чист.
+       Браво Стефан! Пајплајнот конечно работи без грешка.
                                """,
                                result: 'SUCCESS'
                            )
@@ -66,4 +62,16 @@ pipeline {
             }
         }
     }
+}
+
+@NonCPS
+def getCommitAuthor() {
+    def changeLogSets = currentBuild.changeSets
+    if (changeLogSets != null && !changeLogSets.isEmpty()) {
+        def entries = changeLogSets[0].items
+        if (entries.length > 0) {
+            return entries[0].author.fullName
+        }
+    }
+    return "Unknown Developer"
 }
