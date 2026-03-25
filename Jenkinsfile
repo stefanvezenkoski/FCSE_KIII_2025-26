@@ -56,7 +56,7 @@ pipeline {
                 discordSend(
                     webhookURL: "${DISCORD_URL}",
                     title: "Build failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                    description: "Check the logs in Jenkins. ❌. The build was made by: ${env.USER_ID}. Check the changes here: ${env.RUN_DISPLAY_URL}",
+                    description: "Check the logs in Jenkins. ❌. The build was made by: ${authorName}. Check the changes here: ${env.RUN_DISPLAY_URL}",
                     result: 'FAILURE',
                 )
             }
