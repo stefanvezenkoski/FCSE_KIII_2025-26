@@ -35,7 +35,7 @@ pipeline {
                        // Ја повикуваме функцијата одоздола
                        def authorName = getCommitAuthor()
 
-                       withCredentials([string(credentialsId: 'discord-webhook-id', variable: 'DISCORD_URL')]) {
+                       withCredentials([string(credentialsId: 'my-discord-webhook', variable: 'DISCORD_URL')]) {
                            discordSend(
                                webhookURL: "${DISCORD_URL}",
                                title: "Билд #${env.BUILD_NUMBER} - УСПЕШЕН! ✅",
