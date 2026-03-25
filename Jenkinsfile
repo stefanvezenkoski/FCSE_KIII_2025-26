@@ -38,13 +38,13 @@ pipeline {
                        withCredentials([string(credentialsId: 'my-discord-webhook', variable: 'DISCORD_URL')]) {
                            discordSend(
                                webhookURL: "${DISCORD_URL}",
-                               title: "Билд #${env.BUILD_NUMBER} - УСПЕШЕН! ✅",
+                               title: "Build #${env.BUILD_NUMBER} - SUCCESSFUL! ✅",
                                description: """
-       **Проект:** ${env.JOB_NAME}
-       **Девелопер:** ${authorName}
-       **Линкот е поправен:** ${env.BUILD_URL}
-       __________________________________
-       Браво Стефан! Пајплајнот конечно работи без грешка.
+       **Project name:** ${env.JOB_NAME}
+       **Developer:** ${authorName}
+       **Link:** ${currentBuild.absoluteUrl}
+     __________________________________
+       Congratulations! The pipeline is finally working without errors.
                                """,
                                result: 'SUCCESS'
                            )
@@ -55,8 +55,8 @@ pipeline {
             withCredentials([string(credentialsId: 'my-discord-webhook', variable: 'DISCORD_URL')]) {
                 discordSend(
                     webhookURL: "${DISCORD_URL}",
-                    title: "Build ФЕЈЛНА: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                    description: "Провери ги логовите во Jenkins. ❌. Build-от го направи: ${env.USER_ID}. Погледни ги промените тука: ${env.RUN_DISPLAY_URL}",
+                    title: "Build failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                    description: "Check the logs in Jenkins. ❌. The build was made by: ${env.USER_ID}. Check the changes here: ${env.RUN_DISPLAY_URL}",
                     result: 'FAILURE',
                 )
             }
