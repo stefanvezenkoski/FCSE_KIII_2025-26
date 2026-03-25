@@ -30,27 +30,27 @@ pipeline {
         always {
             echo 'Pipeline finished!'
         }
-        success {
-            echo 'Bravo Stefan! Tests passed.'
-            // Discord нотификација за успех
-            discordSend(
-                webhookURL: ,
-                title: "Успешен Build: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                description: "Браво Стефан! Апликацијата е успешно тестирана и спакувана. ✅",
-                result: 'SUCCESS',
-                scms: true
-            )
+success {
+            // Оваа линија му кажува на Jenkins: „Оди во Credentials, најди го тој со ID 'discord-webhook-id' и стави го во променливата DISCORD_URL“
+            withCredentials([string(credentialsId: 'discord-webhook-id', variable: 'https://discord.com/api/webhooks/1486155351916019732/UzufAjZjAirWKS7MyYVNbhmazrnzeb1fiV9pInWjUpWFR4RLveqyrdTa8oEOVleU43HV')]) {
+                discordSend(
+                    webhookURL: "${https://discord.com/api/webhooks/1486155351916019732/UzufAjZjAirWKS7MyYVNbhmazrnzeb1fiV9pInWjUpWFR4RLveqyrdTa8oEOVleU43HV}",
+                    title: "Успешен Build: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                    description: "Браво Стефан! Сега работиме безбедно и професионално. ✅",
+                    result: 'SUCCESS',
+                    scms: true
+                )
+            }
         }
         failure {
-            echo 'Error! Check the console output.'
-            // Discord нотификација за неуспех
-            discordSend(
-                webhookURL: ,
-                title: "Build ФЕЈЛНА: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                description: "Нешто се расипа! Провери ги логовите во Jenkins. ❌",
-                result: 'FAILURE',
-                scms: true
-            )
-        }
-    }
+            withCredentials([string(credentialsId: 'discord-webhook-id', variable: 'https://discord.com/api/webhooks/1486155351916019732/UzufAjZjAirWKS7MyYVNbhmazrnzeb1fiV9pInWjUpWFR4RLveqyrdTa8oEOVleU43HV')]) {
+                discordSend(
+                    webhookURL: "${https://discord.com/api/webhooks/1486155351916019732/UzufAjZjAirWKS7MyYVNbhmazrnzeb1fiV9pInWjUpWFR4RLveqyrdTa8oEOVleU43HV}",
+                    title: "Build ФЕЈЛНА: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                    description: "Нешто се расипа! Провери ги логовите во Jenkins. ❌",
+                    result: 'FAILURE',
+                    scms: true
+                )
+            }
+        }    }
 }
