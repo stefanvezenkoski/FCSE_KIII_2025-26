@@ -9,6 +9,7 @@ pipeline {
         }
         stage('Compile') {
             steps {
+                sh 'chmod +x mvnw'
                 sh './mvnw clean compile'
             }
         }
@@ -25,32 +26,31 @@ pipeline {
         }
     }
 
-    // СИТЕ пост-акции одат во ЕДЕН блок
     post {
         always {
             echo 'Pipeline finished!'
         }
-success {
-            // Оваа линија му кажува на Jenkins: „Оди во Credentials, најди го тој со ID 'discord-webhook-id' и стави го во променливата DISCORD_URL“
-            withCredentials([string(credentialsId: 'discord-webhook-id', variable: 'https://discord.com/api/webhooks/1486155351916019732/UzufAjZjAirWKS7MyYVNbhmazrnzeb1fiV9pInWjUpWFR4RLveqyrdTa8oEOVleU43HV')]) {
+        success {
+            withCredentials([string(credentialsId: 'discord-webhook-id', variable: 'DISCORD_URL')]) {
                 discordSend(
-                    webhookURL: "${https://discord.com/api/webhooks/1486155351916019732/UzufAjZjAirWKS7MyYVNbhmazrnzeb1fiV9pInWjUpWFR4RLveqyrdTa8oEOVleU43HV}",
+                    webhookURL: "${DISCORD_URL}",
                     title: "Успешен Build: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                    description: "Браво Стефан! Сега работиме безбедно и професионално. ✅",
+                    description: "Браво Стефан! Сега кодот е конечно безбеден и чист. ✅",
                     result: 'SUCCESS',
                     scms: true
                 )
             }
         }
         failure {
-            withCredentials([string(credentialsId: 'discord-webhook-id', variable: 'https://discord.com/api/webhooks/1486155351916019732/UzufAjZjAirWKS7MyYVNbhmazrnzeb1fiV9pInWjUpWFR4RLveqyrdTa8oEOVleU43HV')]) {
+            withCredentials([string(credentialsId: 'discord-webhook-id', variable: 'DISCORD_URL')]) {
                 discordSend(
-                    webhookURL: "${https://discord.com/api/webhooks/1486155351916019732/UzufAjZjAirWKS7MyYVNbhmazrnzeb1fiV9pInWjUpWFR4RLveqyrdTa8oEOVleU43HV}",
+                    webhookURL: "${DISCORD_URL}",
                     title: "Build ФЕЈЛНА: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                    description: "Нешто се расипа! Провери ги логовите во Jenkins. ❌",
+                    description: "Провери ги логовите во Jenkins. ❌",
                     result: 'FAILURE',
                     scms: true
                 )
             }
-        }    }
+        }
+    }
 }
