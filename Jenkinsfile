@@ -37,7 +37,7 @@ pipeline {
                     title: "Успешен Build: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                     description: "Браво Стефан! Сега кодот е конечно безбеден и чист. ✅ Build-от го направи: ${env.USER_ID}. Погледни ги промените тука: ${env.BUILD_URL}",
                     result: 'SUCCESS',
-                    showHeader: true
+                    scms: true
                 )
             }
         }
@@ -48,7 +48,7 @@ pipeline {
                     title: "Build ФЕЈЛНА: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                     description: "Провери ги логовите во Jenkins. ❌. Build-от го направи: ${env.USER_ID}. Погледни ги промените тука: ${env.BUILD_URL}",
                     result: 'FAILURE',
-                    showHeader: true
+                    scms: true
                 )
             }
         }
