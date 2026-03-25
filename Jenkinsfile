@@ -31,7 +31,7 @@ pipeline {
             echo 'Pipeline finished!'
         }
         success {
-            withCredentials([string(credentialsId: 'discord-webhook-id', variable: 'DISCORD_URL')]) {
+            withCredentials([string(credentialsId: 'my-discord-webhook', variable: 'DISCORD_URL')]) {
                 discordSend(
                     webhookURL: "${DISCORD_URL}",
                     title: "Успешен Build: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
@@ -41,7 +41,7 @@ pipeline {
             }
         }
         failure {
-            withCredentials([string(credentialsId: 'discord-webhook-id', variable: 'DISCORD_URL')]) {
+            withCredentials([string(credentialsId: 'my-discord-webhook', variable: 'DISCORD_URL')]) {
                 discordSend(
                     webhookURL: "${DISCORD_URL}",
                     title: "Build ФЕЈЛНА: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
