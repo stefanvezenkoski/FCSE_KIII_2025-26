@@ -37,6 +37,7 @@ pipeline {
                     title: "Успешен Build: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                     description: "Браво Стефан! Сега кодот е конечно безбеден и чист. ✅",
                     result: 'SUCCESS',
+                    scms: true
                 )
             }
         }
@@ -47,6 +48,7 @@ pipeline {
                     title: "Build ФЕЈЛНА: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                     description: "Провери ги логовите во Jenkins. ❌",
                     result: 'FAILURE',
+                    scms: true
                 )
             }
         }
