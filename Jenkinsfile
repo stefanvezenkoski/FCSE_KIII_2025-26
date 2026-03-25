@@ -39,7 +39,7 @@ pipeline {
                            authorName = changeLogSets[0].items[0].author.fullName
                        }
 
-                       withCredentials([string(credentialsId: 'discord-webhook-id', variable: 'DISCORD_URL')]) {
+                       withCredentials([string(credentialsId: 'my-discord-webhook', variable: 'DISCORD_URL')]) {
                            discordSend(
                                webhookURL: "${DISCORD_URL}",
                                title: "Build #${env.BUILD_NUMBER} - УСПЕШЕН! ✅",
