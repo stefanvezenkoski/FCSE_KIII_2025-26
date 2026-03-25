@@ -52,6 +52,7 @@ pipeline {
                    }
                }
         failure {
+        script {
            def authorName = getCommitAuthor()
 
             withCredentials([string(credentialsId: 'my-discord-webhook', variable: 'DISCORD_URL')]) {
@@ -61,6 +62,7 @@ pipeline {
                     description: "Check the logs in Jenkins. ❌. The build was made by: ${authorName}. Check the changes here: ${env.RUN_DISPLAY_URL}",
                     result: 'FAILURE',
                 )
+            }
             }
         }
     }
