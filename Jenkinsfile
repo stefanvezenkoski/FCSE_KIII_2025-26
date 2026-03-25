@@ -4,61 +4,53 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Jenkins автоматски го презема кодот бидејќи го поврзавме во Чекор 3
                 echo 'Checking out code from GitHub...'
             }
         }
         stage('Compile') {
             steps {
-                // Ова ја компајлира Java апликацијата
                 sh './mvnw clean compile'
             }
         }
         stage('Unit Tests') {
             steps {
-                // Ова ги извршува тестовите што ги напишавме
                 sh './mvnw test'
             }
         }
         stage('Package') {
             steps {
-                // Ова прави .jar фајл (финалниот продукт)
                 sh './mvnw package -DskipTests'
                 echo 'App is ready! Found in target/ folder.'
             }
         }
     }
 
+    // СИТЕ пост-акции одат во ЕДЕН блок
     post {
         always {
             echo 'Pipeline finished!'
         }
         success {
             echo 'Bravo Stefan! Tests passed.'
+            // Discord нотификација за успех
+            discordSend(
+                webhookURL: 'https://discord.com/api/webhooks/1486151466661056654/xobOHz1lbnV13AZcmGHBZzgplnSpPfGJettARan-JDciKhGtaRRszL8mDQa23thYNkEm',
+                title: "Успешен Build: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                description: "Браво Стефан! Апликацијата е успешно тестирана и спакувана. ✅",
+                result: 'SUCCESS',
+                scms: true
+            )
         }
         failure {
             echo 'Error! Check the console output.'
+            // Discord нотификација за неуспех
+            discordSend(
+                webhookURL: 'https://discord.com/api/webhooks/1486151466661056654/xobOHz1lbnV13AZcmGHBZzgplnSpPfGJettARan-JDciKhGtaRRszL8mDQa23thYNkEm',
+                title: "Build ФЕЈЛНА: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                description: "Нешто се расипа! Провери ги логовите во Jenkins. ❌",
+                result: 'FAILURE',
+                scms: true
+            )
         }
     }
-
-    post {
-            success {
-                discordSend(
-                    webhookURL: 'https://discord.com/api/webhooks/1486151466661056654/xobOHz1lbnV13AZcmGHBZzgplnSpPfGJettARan-JDciKhGtaRRszL8mDQa23thYNkEm',
-                    title: "Успешен Build: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                    description: "Браво Стефан! Апликацијата е успешно тестирана и спакувана. ✅",
-                    result: 'SUCCESS',
-                    scms: true
-                )
-            }
-            failure {
-                discordSend(
-                    webhookURL: 'https://discord.com/api/webhooks/1486151466661056654/xobOHz1lbnV13AZcmGHBZzgplnSpPfGJettARan-JDciKhGtaRRszL8mDQa23thYNkEm',
-                    title: "Build ФЕЈЛНА: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                    description: "Нешто се расипа! Провери ги логовите во Jenkins. ❌",
-                    result: 'FAILURE',
-                    scms: true
-                )
-            }
-        }
 }
