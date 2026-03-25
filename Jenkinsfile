@@ -58,8 +58,14 @@ pipeline {
             withCredentials([string(credentialsId: 'my-discord-webhook', variable: 'DISCORD_URL')]) {
                 discordSend(
                     webhookURL: "${DISCORD_URL}",
-                    title: "Build failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                    description: "Check the logs in Jenkins. ❌. The build was made by: ${authorName}. Check the changes here: ${env.RUN_DISPLAY_URL}",
+                    title: "#${env.BUILD_NUMBER} - Build failed:" ❌,
+                               description: """
+       **Project name:** ${env.JOB_NAME}
+       **Developer:** ${authorName}
+       **Check the changes here:** ${currentBuild.absoluteUrl}
+     __________________________________
+
+                               """,
                     result: 'FAILURE',
                 )
             }
