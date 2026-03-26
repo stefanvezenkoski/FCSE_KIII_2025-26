@@ -1,0 +1,19 @@
+name: My GitHub Workflow
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  izvrsavanje-zadataka:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Preuzmi kod iz repozitorija
+        uses: actions/checkout@v4
+
+      - name: Ispiši poruku u terminalu
+        run: |
+          echo "Pozdrav! Ovaj korak se izvodi direktno u shellu."
+          echo "Trenutni direktorij je: $(pwd)"
